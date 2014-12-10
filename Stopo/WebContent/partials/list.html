@@ -15,14 +15,14 @@
 						<tr>
 							<th>Namn</th>
 							<th>Symbol</th>
-							<th>Antal</th>
+							<th>Kategori</th>
 						</tr>
 					</thead>
 					<tbody>
 						<tr ng-repeat="stock in stocks">
 							<td>{{stock.name}}</td>
 							<td>{{stock.yahooTicker}}</td>
-							<td>{{stock.shares}}</td>
+							<td>{{stock.label}}</td>
 						</tr>
 					</tbody>
 				</table>
