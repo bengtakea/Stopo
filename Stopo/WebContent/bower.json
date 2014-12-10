@@ -1,0 +1,21 @@
+{
+  "name": "stock-portfolio",
+  "description": "Stock portfolio",
+  "version": "0.0.1",
+  "license": "MIT",
+  "private": true,
+  "dependencies": {
+    "angular": "1.3.x",
+    "jquery": "1.11.x",
+    "bootstrap": "3.3.x",
+    "angular-route": "1.3.x",
+    "angular-resource": "1.3.x"
+  },
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ]
+}
