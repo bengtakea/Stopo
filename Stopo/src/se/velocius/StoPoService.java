@@ -2,7 +2,9 @@ package se.velocius;
 
 import java.util.List;
 
+import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
+import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
@@ -29,9 +31,17 @@ public class StoPoService {
 		DynamoDBScanExpression scanExpression = new DynamoDBScanExpression();
 		List<Stock> stocks = mapper.scan(Stock.class, scanExpression);
 
-		for (Stock stock : stocks) {
-			System.out.println(stock);
-		}
 		return stocks.toArray(new Stock[stocks.size()]);
+	}
+
+	@POST
+	@Path("/stock")
+	@Consumes("application/json")
+	public Stock addStock(final Stock stock) {
+		DynamoDBMapper mapper = DBHandler.getDBMapper();
+
+		mapper.save(stock);
+
+		return stock;
 	}
 }
