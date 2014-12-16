@@ -1,15 +1,31 @@
 <div class="container-fluid">
 	<div class="row">
 		<div class="col-sm-3 col-md-2 sidebar">
-			<div class="input-group">
-				<input type="text" class="form-control" ng-model="stock.yahooTicker" /> 
-				<span class="input-group-btn">
-					<button class="btn btn-default" type="button" ng-click="AddTicker()">L&auml;gg
-						till!</button>
-				</span>
-			</div>
-			{{stock}}
-			<!-- /input-group -->
+			<ul>
+				<li class="nav-sidebar"><select ng-model="newLabel">
+						<option value="gold">Guld</option>
+						<option value="energi">Energi</option>
+						<option value="teck">Teck</option>
+						<option value="general">Allm&auml;nt</option>
+				</select></li>
+				<li class="nav-sidebar">
+					<div class="input-group">
+						<input type="text" class="form-control" ng-model="newTicker" /> <span
+							class="input-group-btn">
+							<button class="btn btn-default" type="button"
+								ng-click="AddTicker()">L&auml;gg till!</button>
+						</span>
+					</div> <!-- /input-group -->
+				</li>
+				<li class="nav-sidebar">
+					<button class="btn btn-default" type="button"
+						ng-click="UpdateQuotes()">Uppdatera kurser</button>
+				</li>
+				<li class="nav-sidebar">
+					<div ng-show="error">There was a problem with the Yahoo
+						Finance API. Please try again later.</div>
+				</li>
+			</ul>
 		</div>
 		<div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
 			<div class="table-responsive">
@@ -18,6 +34,8 @@
 						<tr>
 							<th>Namn</th>
 							<th>Symbol</th>
+							<th>Senast</th>
+							<th>+/- %</th>
 							<th>Kategori</th>
 						</tr>
 					</thead>
@@ -25,6 +43,14 @@
 						<tr ng-repeat="stock in stocks">
 							<td>{{stock.name}}</td>
 							<td>{{stock.yahooTicker}}</td>
+							<td
+								ng-style="stock.change === 0.0 && {'color': 'black'} ||
+                  stock.change > 0.0 && {'color': 'green'} ||
+                  stock.change < 0.0 && {'color': 'red'}">{{stock.lastQuote}}</td>
+							<td
+								ng-style="stock.change === 0.0 && {'color': 'black'} ||
+                  stock.change > 0.0 && {'color': 'green'} ||
+                  stock.change < 0.0 && {'color': 'red'}">{{stock.change}}</td>
 							<td>{{stock.label}}</td>
 						</tr>
 					</tbody>

@@ -3,6 +3,10 @@ body {
 	padding-top: 20px;
 }
 
+ul {
+	list-style: none;
+}
+
 /*
  * Global add-ons
  */
@@ -73,3 +77,4 @@ body {
 .main .page-header {
 	margin-top: 0;
 }
+
