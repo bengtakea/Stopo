@@ -13,6 +13,9 @@ import se.velocius.model.Stock;
 
 import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBMapper;
 import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBScanExpression;
+import com.amazonaws.services.dynamodbv2.model.AttributeValue;
+import com.amazonaws.services.dynamodbv2.model.ComparisonOperator;
+import com.amazonaws.services.dynamodbv2.model.Condition;
 
 @Path("/stoposervice")
 public class StoPoService {
@@ -40,7 +43,21 @@ public class StoPoService {
 	public Stock addStock(final Stock stock) {
 		DynamoDBMapper mapper = DBHandler.getDBMapper();
 
-		mapper.save(stock);
+		DynamoDBScanExpression scanExpression = new DynamoDBScanExpression();
+		scanExpression.addFilterCondition(
+				"YahooTicker",
+				new Condition().withComparisonOperator(ComparisonOperator.EQ)
+						.withAttributeValueList(
+								new AttributeValue().withS(stock
+										.getYahooTicker())));
+		List<Stock> stocks = mapper.scan(Stock.class, scanExpression);
+		if (stocks.size() > 0) {
+			String errStr = "Duplicat : " + stocks.get(0);
+			System.out.println(errStr);
+
+		} else {
+			mapper.save(stock);
+		}
 
 		return stock;
 	}

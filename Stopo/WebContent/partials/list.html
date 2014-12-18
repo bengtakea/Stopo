@@ -40,7 +40,7 @@
 						</tr>
 					</thead>
 					<tbody>
-						<tr ng-repeat="stock in stocks">
+						<tr ng-repeat="stock in stocks | orderBy:'name'">
 							<td>{{stock.name}}</td>
 							<td>{{stock.yahooTicker}}</td>
 							<td

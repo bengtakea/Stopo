@@ -51,4 +51,10 @@ public class Stock {
 		this.label = label;
 	}
 
+	@Override
+	public String toString() {
+		return "Stock [sid=" + sid + ", name=" + name + ", yahooTicker="
+				+ yahooTicker + ", label=" + label + "]";
+	}
+
 }

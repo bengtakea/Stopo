@@ -15,22 +15,25 @@ stopoControllers
 						'Yahoo',
 						function($scope, $http, Portfolio, Stock, Yahoo) {
 							$scope.refresh = function() {
-								$scope.stocks = Portfolio.query();
-								var i;
-								for (i = 0; i < $scope.stocks.length; i++) {
-									if ($scope.stocks[i].label == 'gold') {
-										$scope.stocks[i].label = 'Guld'
-									}
-									if ($scope.stocks[i].label == 'energy') {
-										$scope.stocks[i].label = 'Energi'
-									}
-									if ($scope.stocks[i].label == 'teck') {
-										$scope.stocks[i].label = 'Teck'
-									}
-									if ($scope.stocks[i].label == 'general') {
-										$scope.stocks[i].label = 'Allmänt'
-									}
-								}
+								$scope.stocks = Portfolio
+										.query(function() {
+											var i;
+											for (i = 0; i < $scope.stocks.length; i++) {
+												if ($scope.stocks[i].label == 'gold') {
+													$scope.stocks[i].label = 'Guld'
+												}
+												if ($scope.stocks[i].label == 'energy') {
+													$scope.stocks[i].label = 'Energi'
+												}
+												if ($scope.stocks[i].label == 'teck') {
+													$scope.stocks[i].label = 'Teck'
+												}
+												if ($scope.stocks[i].label == 'general') {
+													$scope.stocks[i].label = 'Allmänt'
+												}
+											}
+										});
+
 							};
 
 							$scope.AddTicker = function() {
