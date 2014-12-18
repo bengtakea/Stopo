@@ -5,8 +5,7 @@
 var stopoApp = angular.module('stopoApp', [
   'ngRoute',
   'stopoControllers',
-  'stopoServices',
-  'ui.select2'
+  'stopoServices'
 ]);
 
 stopoApp.config(['$routeProvider',
