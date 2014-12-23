@@ -1,0 +1,47 @@
+<h2>{{stock.yahooTicker}} - {{stock.name}}</h2>
+
+<div class="container-fluid">
+	<div class="row">
+		<div class="col-md-2">
+			<button type="button" class="btn btn-default" ng-click="AddTransaction()">Ny trans.</button>
+		</div>
+		<div class="col-md-2">
+			<p>Typ :</p>
+			<select ng-model="newType">
+				<option value="buy">K&oumlp</option>
+				<option value="sell">S&auml;lj</option>
+			</select>
+		</div>
+		<div class="col-md-2">
+			<p>Datum :</p>
+			<p class="input-group">
+				<input type="text" class="form-control"
+					datepicker-popup="{{format}}" ng-model="dt" is-open="opened"
+					min-date="2010-01-01" max-date="'2015-06-22'"
+					datepicker-options="dateOptions"
+					date-disabled="disabled(date, mode)" ng-required="true"
+					close-text="Close" /> <span class="input-group-btn">
+					<button type="button" class="btn btn-default"
+						ng-click="open($event)">
+						<i class="glyphicon glyphicon-calendar"></i>
+					</button>
+				</span>
+			</p>
+		</div>
+
+		<div class="col-md-2">
+			<p>Antal :</p>
+			<input type="text" class="form-control" ng-model="newShares" />
+		</div>
+
+		<div class="col-md-2">
+			<p>Pris / aktie :</p>
+			<input type="text" class="form-control" ng-model="newPrice" />
+		</div>
+
+		<div class="col-md-2">
+			<p>Dep&aring :</p>
+			<input type="text" class="form-control" ng-model="newPortfolio" />
+		</div>
+	</div>
+</div>

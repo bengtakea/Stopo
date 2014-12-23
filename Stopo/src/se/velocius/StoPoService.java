@@ -7,11 +7,14 @@ import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
+import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.MediaType;
 
 import se.velocius.model.Stock;
+import se.velocius.model.Transaction;
 
 import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBMapper;
+import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBQueryExpression;
 import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBScanExpression;
 import com.amazonaws.services.dynamodbv2.model.AttributeValue;
 import com.amazonaws.services.dynamodbv2.model.ComparisonOperator;
@@ -61,4 +64,29 @@ public class StoPoService {
 
 		return stock;
 	}
+
+	@GET
+	@Path("/stock")
+	@Produces(MediaType.APPLICATION_JSON)
+	public Stock getStock(@QueryParam("sid") final String sid) {
+		DynamoDBMapper mapper = DBHandler.getDBMapper();
+
+		Stock stock = new Stock();
+		stock.setSid(sid);
+		List<Stock> stocks = mapper.query(Stock.class,
+				new DynamoDBQueryExpression<Stock>().withHashKeyValues(stock));
+		return stocks.get(0);
+	}
+
+	@POST
+	@Path("/trans")
+	@Consumes("application/json")
+	public Transaction addTrans(final Transaction transaction) {
+		DynamoDBMapper mapper = DBHandler.getDBMapper();
+
+		mapper.save(transaction);
+
+		return transaction;
+	}
+
 }

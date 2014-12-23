@@ -41,7 +41,7 @@
 					</thead>
 					<tbody>
 						<tr ng-repeat="stock in stocks | orderBy:'name'">
-							<td>{{stock.name}}</td>
+							<td><a href="#/portfolio/{{stock.sid}}">{{stock.name}}</a></td>
 							<td>{{stock.yahooTicker}}</td>
 							<td
 								ng-style="stock.change === 0.0 && {'color': 'black'} ||
