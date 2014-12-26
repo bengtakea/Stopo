@@ -3,7 +3,8 @@
 <div class="container-fluid">
 	<div class="row">
 		<div class="col-md-2">
-			<button type="button" class="btn btn-default" ng-click="AddTransaction()">Ny trans.</button>
+			<button type="button" class="btn btn-default"
+				ng-click="AddTransaction()">Ny trans.</button>
 		</div>
 		<div class="col-md-2">
 			<p>Typ :</p>
@@ -42,6 +43,32 @@
 		<div class="col-md-2">
 			<p>Dep&aring :</p>
 			<input type="text" class="form-control" ng-model="newPortfolio" />
+		</div>
+	</div>
+	<div class="row">
+		<div class="col-md-12">
+			<div class="table-responsive">
+				<table class="table table-striped">
+					<thead>
+						<tr>
+							<th>Typ</th>
+							<th>Datum</th>
+							<th>Antal</th>
+							<th>Pris / aktie</th>
+							<th>Dep&aring</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr ng-repeat="transaction in transactions | orderBy:'date'">
+							<td>{{transaction.type}}</td>
+							<td>{{transaction.date}}</td>
+							<td>{{transaction.shares}}</td>
+							<td>{{transaction.price}}</td>
+							<td>{{transaction.portfolio}}</td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
 		</div>
 	</div>
 </div>

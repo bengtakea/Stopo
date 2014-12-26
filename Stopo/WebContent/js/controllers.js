@@ -97,10 +97,28 @@ stopoControllers.controller('DetailCtrl',
 				'Stock',
 				'Trans',
 				function($scope, $routeParams, Stock, Trans) {
+
+					$scope.refresh = function() {
+						$scope.transactions = Trans.query({
+							stockSid : $scope.stock.sid
+						}, function() {
+							var i;
+							for (i = 0; i < $scope.transactions.length; i++) {
+								if ($scope.transactions[i].type == 'buy') {
+									$scope.transactions[i].type = 'Köp'
+								}
+								if ($scope.transactions[i].type == 'sell') {
+									$scope.transactions[i].type = 'Sälj'
+								}
+								$scope.transactions[i].date = new Date($scope.transactions[i].date);
+							}
+						});
+					}
+
 					$scope.stock = Stock.get({
 						sid : $routeParams.sid
 					}, function(stock) {
-						// $scope.mainImageUrl = phone.images[0];
+						$scope.refresh();
 					});
 					$scope.newType = 'buy';
 
@@ -149,11 +167,12 @@ stopoControllers.controller('DetailCtrl',
 						trans.price = $scope.newPrice;
 						trans.portfolio = $scope.newPortfolio;
 						Trans.save(trans, function(data) {
+							$scope.refresh();
 						});
 						$scope.newType = 'buy';
 						$scope.newShares = null;
 						$scope.newPrice = null;
-						$scope.newPortfolio = '';		
+						$scope.newPortfolio = '';
 					};
 
 				} ]);

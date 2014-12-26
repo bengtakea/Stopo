@@ -89,4 +89,21 @@ public class StoPoService {
 		return transaction;
 	}
 
+	@GET
+	@Path("/trans")
+	@Produces(MediaType.APPLICATION_JSON)
+	public Transaction[] getTransactions(
+			@QueryParam("stockSid") final String stockSid) {
+		DynamoDBMapper mapper = DBHandler.getDBMapper();
+
+		DynamoDBScanExpression scanExpression = new DynamoDBScanExpression();
+		scanExpression.addFilterCondition("StockSid", new Condition()
+				.withComparisonOperator(ComparisonOperator.EQ)
+				.withAttributeValueList(new AttributeValue().withS(stockSid)));
+		List<Transaction> transactions = mapper.scan(Transaction.class,
+				scanExpression);
+
+		return transactions.toArray(new Transaction[transactions.size()]);
+	}
+
 }
