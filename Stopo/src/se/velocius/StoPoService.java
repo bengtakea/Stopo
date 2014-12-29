@@ -1,6 +1,10 @@
 package se.velocius;
 
+import static java.util.stream.Collectors.groupingBy;
+import static java.util.stream.Collectors.summingInt;
+
 import java.util.List;
+import java.util.Map;
 
 import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
@@ -36,6 +40,17 @@ public class StoPoService {
 
 		DynamoDBScanExpression scanExpression = new DynamoDBScanExpression();
 		List<Stock> stocks = mapper.scan(Stock.class, scanExpression);
+		List<Transaction> transactions = mapper.scan(Transaction.class,
+				scanExpression);
+
+		Map<String, Integer> noSharesByStockSid = transactions.stream()
+				.collect(
+						groupingBy(Transaction::getStockSid,
+								summingInt(Transaction::delta)));
+
+		stocks.stream()
+				.filter(s -> noSharesByStockSid.containsKey(s.getSid()))
+				.forEach(s -> s.setNoShares(noSharesByStockSid.get(s.getSid())));
 
 		return stocks.toArray(new Stock[stocks.size()]);
 	}

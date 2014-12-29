@@ -82,4 +82,11 @@ public class Transaction {
 		this.portfolio = portfolio;
 	}
 
+	public int delta() {
+		if (type.equals("sell")) {
+			return -shares;
+		}
+		return shares;
+	}
+
 }

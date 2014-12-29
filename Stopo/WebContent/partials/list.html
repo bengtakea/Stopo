@@ -34,8 +34,10 @@
 						<tr>
 							<th>Namn</th>
 							<th>Symbol</th>
+							<th>Antal</th>
 							<th>Senast</th>
 							<th>+/- %</th>
+							<th>Markn.v&auml;rde</th>
 							<th>Kategori</th>
 						</tr>
 					</thead>
@@ -43,6 +45,7 @@
 						<tr ng-repeat="stock in stocks | orderBy:'name'">
 							<td><a href="#/portfolio/{{stock.sid}}">{{stock.name}}</a></td>
 							<td>{{stock.yahooTicker}}</td>
+							<td>{{stock.noShares}}</td>
 							<td
 								ng-style="stock.change === 0.0 && {'color': 'black'} ||
                   stock.change > 0.0 && {'color': 'green'} ||
@@ -51,6 +54,7 @@
 								ng-style="stock.change === 0.0 && {'color': 'black'} ||
                   stock.change > 0.0 && {'color': 'green'} ||
                   stock.change < 0.0 && {'color': 'red'}">{{stock.change}}</td>
+							<td>{{stock.sekValue}}</td>
 							<td>{{stock.label}}</td>
 						</tr>
 					</tbody>

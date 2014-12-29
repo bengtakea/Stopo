@@ -121,6 +121,7 @@ stopoControllers.controller('DetailCtrl',
 						$scope.refresh();
 					});
 					$scope.newType = 'buy';
+					$scope.newPortfolio = 'Avanza ISK'
 
 					$scope.today = function() {
 						$scope.dt = new Date();
