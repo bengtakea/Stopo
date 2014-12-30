@@ -13,7 +13,8 @@ stopoControllers
 						'Portfolio',
 						'Stock',
 						'Yahoo',
-						function($scope, $http, Portfolio, Stock, Yahoo) {
+						'OpenEx',
+						function($scope, $http, Portfolio, Stock, Yahoo, OpenEx) {
 							$scope.refresh = function() {
 								$scope.stocks = Portfolio
 										.query(function() {
@@ -76,6 +77,30 @@ stopoControllers
 															if ($scope.stocks[j].yahooTicker == stock.yahooTicker) {
 																$scope.stocks[j].lastQuote = data.query.results.quote["LastTradePriceOnly"];
 																$scope.stocks[j].change = data.query.results.quote["Change"];
+																var rate = 1.0;
+																if (data.query.results.quote["Currency"] == 'USD') {
+																	rate = $scope.currencyRates.rates.SEK;
+																} else if (data.query.results.quote["Currency"] == 'CAD') {
+																	rate = rate = $scope.currencyRates.rates.SEK
+																			* (1 / $scope.currencyRates.rates.CAD);
+																}
+																var value = (rate
+																		* $scope.stocks[j].lastQuote * $scope.stocks[j].noShares) | 0;
+																$scope.stocks[j].sekValue = (rate
+																		* $scope.stocks[j].lastQuote * $scope.stocks[j].noShares) | 0;
+																$scope.sumValue += value;
+																if ($scope.stocks[j].label == 'Guld') {
+																	$scope.goldValue += value;
+																}
+																if ($scope.stocks[j].label == 'Energi') {
+																	$scope.energyValue += value;
+																}
+																if ($scope.stocks[j].label == 'Teck') {
+																	$scope.teckValue += value;
+																}
+																if ($scope.stocks[j].label == 'Allmänt') {
+																	$scope.generalValue += value;
+																}
 															}
 														}
 													}, function(response) {
@@ -85,8 +110,20 @@ stopoControllers
 								}
 							};
 
+							$scope.Update = function() {
+								$scope.currencyRates = OpenEx.get({}, function(
+										data) {
+									$scope.UpdateQuotes();
+								});
+							};
+
 							$scope.newLabel = 'gold';
 							$scope.refresh();
+							$scope.sumValue = 0;
+							$scope.goldValue = 0;
+							$scope.energyValue = 0;
+							$scope.teckValue = 0;
+							$scope.generalValue = 0;
 
 						} ]);
 
@@ -110,7 +147,8 @@ stopoControllers.controller('DetailCtrl',
 								if ($scope.transactions[i].type == 'sell') {
 									$scope.transactions[i].type = 'Sälj'
 								}
-								$scope.transactions[i].date = new Date($scope.transactions[i].date);
+								$scope.transactions[i].date = new Date(
+										$scope.transactions[i].date);
 							}
 						});
 					}

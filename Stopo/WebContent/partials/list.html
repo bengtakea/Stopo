@@ -19,11 +19,36 @@
 				</li>
 				<li class="nav-sidebar">
 					<button class="btn btn-default" type="button"
-						ng-click="UpdateQuotes()">Uppdatera kurser</button>
+						ng-click="Update()">Uppdatera</button>
 				</li>
 				<li class="nav-sidebar">
 					<div ng-show="error">There was a problem with the Yahoo
 						Finance API. Please try again later.</div>
+				</li>
+				<li class="nav-sidebar">
+					<div>
+						Totalt : <span>{{sumValue}}</span>
+					</div>
+				</li>
+				<li class="nav-sidebar">
+					<div>
+						Guld : {{goldValue}}
+					</div>
+				</li>
+				<li class="nav-sidebar">
+					<div>
+						Energi : {{energyValue}}
+					</div>
+				</li>
+				<li class="nav-sidebar">
+					<div>
+						Teck : {{teckValue}}
+					</div>
+				</li>
+				<li class="nav-sidebar">
+					<div>
+						Allm&auml;nt : {{generalValue}}
+					</div>
 				</li>
 			</ul>
 		</div>
