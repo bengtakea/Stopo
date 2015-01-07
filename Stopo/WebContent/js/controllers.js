@@ -77,6 +77,7 @@ stopoControllers
 															if ($scope.stocks[j].yahooTicker == stock.yahooTicker) {
 																$scope.stocks[j].lastQuote = data.query.results.quote["LastTradePriceOnly"];
 																$scope.stocks[j].change = data.query.results.quote["Change"];
+																$scope.stocks[j].percentchange = data.query.results.quote["PercentChange"];
 																var rate = 1.0;
 																if (data.query.results.quote["Currency"] == 'USD') {
 																	rate = $scope.currencyRates.rates.SEK;
@@ -111,6 +112,11 @@ stopoControllers
 							};
 
 							$scope.Update = function() {
+								$scope.sumValue = 0;
+								$scope.goldValue = 0;
+								$scope.energyValue = 0;
+								$scope.teckValue = 0;
+								$scope.generalValue = 0;
 								$scope.currencyRates = OpenEx.get({}, function(
 										data) {
 									$scope.UpdateQuotes();

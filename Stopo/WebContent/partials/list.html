@@ -18,69 +18,71 @@
 					</div> <!-- /input-group -->
 				</li>
 				<li class="nav-sidebar">
-					<button class="btn btn-default" type="button"
-						ng-click="Update()">Uppdatera</button>
+					<button class="btn btn-default" type="button" ng-click="Update()">Uppdatera</button>
 				</li>
 				<li class="nav-sidebar">
 					<div ng-show="error">There was a problem with the Yahoo
 						Finance API. Please try again later.</div>
 				</li>
 				<li class="nav-sidebar">
-					<div>
-						Totalt : <span>{{sumValue}}</span>
-					</div>
-				</li>
-				<li class="nav-sidebar">
-					<div>
-						Guld : {{goldValue}}
-					</div>
-				</li>
-				<li class="nav-sidebar">
-					<div>
-						Energi : {{energyValue}}
-					</div>
-				</li>
-				<li class="nav-sidebar">
-					<div>
-						Teck : {{teckValue}}
-					</div>
-				</li>
-				<li class="nav-sidebar">
-					<div>
-						Allm&auml;nt : {{generalValue}}
+					<div class="table-responsive">
+						<table class="table table-striped table-condensed">
+							<tbody>
+								<tr>
+									<td>Totalt :</td>
+									<td>{{sumValue}}</td>
+								</tr>
+								<tr>
+									<td>Guld :</td>
+									<td>{{goldValue}}</td>
+								</tr>
+								<tr>
+									<td>Energi :</td>
+									<td>{{energyValue}}</td>
+								</tr>
+								<tr>
+									<td>Teck :</td>
+									<td>{{teckValue}}</td>
+								</tr>
+								<tr>
+									<td>Allm&auml;nt :</td>
+									<td>{{generalValue}}</td>
+								</tr>
+							</tbody>
+						</table>
 					</div>
 				</li>
 			</ul>
 		</div>
 		<div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
 			<div class="table-responsive">
-				<table class="table table-striped">
+				<table class="table table-striped table-condensed">
 					<thead>
 						<tr>
 							<th>Namn</th>
 							<th>Symbol</th>
-							<th>Antal</th>
-							<th>Senast</th>
-							<th>+/- %</th>
-							<th>Markn.v&auml;rde</th>
-							<th>Kategori</th>
+							<th class="text-center">Antal</th>
+							<th class="text-center">Senast</th>
+							<th class="text-center">+/- %</th>
+							<th class="text-center">Markn.v&auml;rde</th>
+							<th class="text-center">Kategori</th>
 						</tr>
 					</thead>
 					<tbody>
 						<tr ng-repeat="stock in stocks | orderBy:'name'">
 							<td><a href="#/portfolio/{{stock.sid}}">{{stock.name}}</a></td>
 							<td>{{stock.yahooTicker}}</td>
-							<td>{{stock.noShares}}</td>
-							<td
+							<td class="text-center">{{stock.noShares}}</td>
+							<td class="text-center"
 								ng-style="stock.change === 0.0 && {'color': 'black'} ||
                   stock.change > 0.0 && {'color': 'green'} ||
                   stock.change < 0.0 && {'color': 'red'}">{{stock.lastQuote}}</td>
-							<td
+							<td class="text-center"
 								ng-style="stock.change === 0.0 && {'color': 'black'} ||
                   stock.change > 0.0 && {'color': 'green'} ||
-                  stock.change < 0.0 && {'color': 'red'}">{{stock.change}}</td>
-							<td>{{stock.sekValue}}</td>
-							<td>{{stock.label}}</td>
+                  stock.change < 0.0 && {'color': 'red'}">{{stock.percentchange}}</td>
+							<td class="text-center">{{stock.sekValue}}</td>
+							<td class="text-center">{{stock.label}}</td>
 						</tr>
 					</tbody>
 				</table>
