@@ -2,21 +2,26 @@
 	<div class="row">
 		<div class="col-sm-3 col-md-2 sidebar">
 			<ul>
+				<li class="nav-sidebar">
+					<div class="checkbox">
+						<label> <input type="checkbox" ng-model="filterZeroStocks">
+							Filtrera aktier med antal 0
+						</label>
+					</div>
+				</li>
 				<li class="nav-sidebar"><select ng-model="newLabel">
 						<option value="gold">Guld</option>
 						<option value="energy">Energi</option>
 						<option value="teck">Teck</option>
 						<option value="general">Allm&auml;nt</option>
-				</select></li>
-				<li class="nav-sidebar">
+				</select>
 					<div class="input-group">
 						<input type="text" class="form-control" ng-model="newTicker" /> <span
 							class="input-group-btn">
 							<button class="btn btn-default" type="button"
 								ng-click="AddTicker()">L&auml;gg till!</button>
 						</span>
-					</div> <!-- /input-group -->
-				</li>
+					</div> <!-- /input-group --></li>
 				<li class="nav-sidebar">
 					<button class="btn btn-default" type="button" ng-click="Update()">Uppdatera</button>
 				</li>
@@ -59,17 +64,46 @@
 				<table class="table table-striped table-condensed">
 					<thead>
 						<tr>
-							<th>Namn</th>
-							<th>Symbol</th>
-							<th class="text-center">Antal</th>
-							<th class="text-center">Senast</th>
-							<th class="text-center">+/- %</th>
-							<th class="text-center">Markn.v&auml;rde</th>
-							<th class="text-center">Kategori</th>
+							<th><a href=""
+								ng-click="predicate = 'name'; reverse=!reverse">Namn</a> <span
+								class="glyphicon"
+								ng-class="predicate === 'name' && !reverse && 'glyphicon-arrow-up' || predicate === 'name' && reverse && 'glyphicon-arrow-down'"
+								aria-hidden="true"></span></th>
+							<th><a href=""
+								ng-click="predicate = 'yahooTicker'; reverse=!reverse">Symbol</a>
+								<span class="glyphicon"
+								ng-class="predicate === 'yahooTicker' && !reverse && 'glyphicon-arrow-up' || predicate === 'yahooTicker' && reverse && 'glyphicon-arrow-down'"
+								aria-hidden="true"></span></th>
+							<th class="text-center"><a href=""
+								ng-click="predicate = 'noShares'; reverse=!reverse">Antal</a> <span
+								class="glyphicon"
+								ng-class="predicate === 'noShares' && !reverse && 'glyphicon-arrow-up' || predicate === 'noShares' && reverse && 'glyphicon-arrow-down'"
+								aria-hidden="true"></span></th>
+							<th class="text-center"><a href=""
+								ng-click="predicate = 'lastQuote'; reverse=!reverse">Senast</a>
+								<span class="glyphicon"
+								ng-class="predicate === 'lastQuote' && !reverse && 'glyphicon-arrow-up' || predicate === 'lastQuote' && reverse && 'glyphicon-arrow-down'"
+								aria-hidden="true"></span></th>
+							<th class="text-center"><a href=""
+								ng-click="predicate = 'percentchange'; reverse=!reverse">+/-
+									%</a><span class="glyphicon"
+								ng-class="predicate === 'percentchange' && !reverse && 'glyphicon-arrow-up' || predicate === 'percentchange' && reverse && 'glyphicon-arrow-down'"
+								aria-hidden="true"></span></th>
+							<th class="text-center"><a href=""
+								ng-click="predicate = 'sekValue'; reverse=!reverse">Markn.v&auml;rde</a>
+								<span class="glyphicon"
+								ng-class="predicate === 'sekValue' && !reverse && 'glyphicon-arrow-up' || predicate === 'sekValue' && reverse && 'glyphicon-arrow-down'"
+								aria-hidden="true"></span></th>
+							<th class="text-center"><a href=""
+								ng-click="predicate = 'label'; reverse=!reverse">Kategori</a> <span
+								class="glyphicon"
+								ng-class="predicate === 'label' && !reverse && 'glyphicon-arrow-up' || predicate === 'label' && reverse && 'glyphicon-arrow-down'"
+								aria-hidden="true"></span></th>
 						</tr>
 					</thead>
 					<tbody>
-						<tr ng-repeat="stock in stocks | orderBy:'name'">
+						<tr
+							ng-repeat="stock in stocks | orderBy:predicate:reverse | filter: filterFunction">
 							<td><a href="#/portfolio/{{stock.sid}}">{{stock.name}}</a></td>
 							<td>{{stock.yahooTicker}}</td>
 							<td class="text-center">{{stock.noShares}}</td>

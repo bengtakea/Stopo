@@ -123,6 +123,11 @@ stopoControllers
 								});
 							};
 
+							$scope.filterFunction = function(stock) {
+								return !$scope.filterZeroStocks
+										| stock.noShares > 0;
+							}
+
 							$scope.newLabel = 'gold';
 							$scope.refresh();
 							$scope.sumValue = 0;
@@ -130,6 +135,7 @@ stopoControllers
 							$scope.energyValue = 0;
 							$scope.teckValue = 0;
 							$scope.generalValue = 0;
+							$scope.predicate = 'name';
 
 						} ]);
 
