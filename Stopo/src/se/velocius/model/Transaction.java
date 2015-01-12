@@ -89,4 +89,10 @@ public class Transaction {
 		return shares;
 	}
 
+	public double costDelta() {
+		if (type.equals("sell")) {
+			return -shares * price;
+		}
+		return shares * price;
+	}
 }

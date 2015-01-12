@@ -1,6 +1,7 @@
 package se.velocius;
 
 import static java.util.stream.Collectors.groupingBy;
+import static java.util.stream.Collectors.summingDouble;
 import static java.util.stream.Collectors.summingInt;
 
 import java.util.List;
@@ -51,6 +52,16 @@ public class StoPoService {
 		stocks.stream()
 				.filter(s -> noSharesByStockSid.containsKey(s.getSid()))
 				.forEach(s -> s.setNoShares(noSharesByStockSid.get(s.getSid())));
+
+		Map<String, Double> costBasisByStockSid = transactions.stream()
+				.collect(
+						groupingBy(Transaction::getStockSid,
+								summingDouble(Transaction::costDelta)));
+
+		stocks.stream()
+				.filter(s -> costBasisByStockSid.containsKey(s.getSid()))
+				.forEach(
+						s -> s.setCostBasis(costBasisByStockSid.get(s.getSid())));
 
 		return stocks.toArray(new Stock[stocks.size()]);
 	}

@@ -77,7 +77,7 @@ stopoControllers
 															if ($scope.stocks[j].yahooTicker == stock.yahooTicker) {
 																$scope.stocks[j].lastQuote = data.query.results.quote["LastTradePriceOnly"];
 																$scope.stocks[j].change = data.query.results.quote["Change"];
-																$scope.stocks[j].percentchange = data.query.results.quote["PercentChange"];
+																$scope.stocks[j].percentchange = parseFloat(data.query.results.quote["PercentChange"]);
 																var rate = 1.0;
 																if (data.query.results.quote["Currency"] == 'USD') {
 																	rate = $scope.currencyRates.rates.SEK;
@@ -89,6 +89,7 @@ stopoControllers
 																		* $scope.stocks[j].lastQuote * $scope.stocks[j].noShares) | 0;
 																$scope.stocks[j].sekValue = (rate
 																		* $scope.stocks[j].lastQuote * $scope.stocks[j].noShares) | 0;
+																$scope.stocks[j].sekCostBasis = (rate * $scope.stocks[j].costBasis) | 0;
 																$scope.sumValue += value;
 																if ($scope.stocks[j].label == 'Guld') {
 																	$scope.goldValue += value;
