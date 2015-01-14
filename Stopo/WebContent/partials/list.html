@@ -100,6 +100,16 @@
 								ng-class="predicate === 'sekCostBasis' && !reverse && 'glyphicon-arrow-up' || predicate === 'sekValue' && reverse && 'glyphicon-arrow-down'"
 								aria-hidden="true"></span></th>
 							<th class="text-center"><a href=""
+								ng-click="predicate = 'percentgain'; reverse=!reverse">Avk. %</a> <span
+								class="glyphicon"
+								ng-class="predicate === 'percentgain' && !reverse && 'glyphicon-arrow-up' || predicate === 'percentgain' && reverse && 'glyphicon-arrow-down'"
+								aria-hidden="true"></span></th>
+							<th class="text-center"><a href=""
+								ng-click="predicate = 'gain'; reverse=!reverse">Avk.</a> <span
+								class="glyphicon"
+								ng-class="predicate === 'gain' && !reverse && 'glyphicon-arrow-up' || predicate === 'gain' && reverse && 'glyphicon-arrow-down'"
+								aria-hidden="true"></span></th>
+							<th class="text-center"><a href=""
 								ng-click="predicate = 'label'; reverse=!reverse">Kategori</a> <span
 								class="glyphicon"
 								ng-class="predicate === 'label' && !reverse && 'glyphicon-arrow-up' || predicate === 'label' && reverse && 'glyphicon-arrow-down'"
@@ -122,6 +132,14 @@
                   stock.change < 0.0 && {'color': 'red'}">{{stock.percentchange}}</td>
 							<td class="text-center">{{stock.sekValue}}</td>
 							<td class="text-center">{{stock.sekCostBasis}}</td>
+							<td class="text-center"
+								ng-style="stock.gain === 0.0 && {'color': 'black'} ||
+                  stock.gain > 0.0 && {'color': 'green'} ||
+                  stock.gain < 0.0 && {'color': 'red'}">{{stock.percentgain}}</td>
+							<td class="text-center"
+								ng-style="stock.gain === 0.0 && {'color': 'black'} ||
+                  stock.gain > 0.0 && {'color': 'green'} ||
+                  stock.gain < 0.0 && {'color': 'red'}">{{stock.gain}}</td>
 							<td class="text-center">{{stock.label}}</td>
 						</tr>
 					</tbody>

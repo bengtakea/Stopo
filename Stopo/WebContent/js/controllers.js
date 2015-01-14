@@ -90,6 +90,8 @@ stopoControllers
 																$scope.stocks[j].sekValue = (rate
 																		* $scope.stocks[j].lastQuote * $scope.stocks[j].noShares) | 0;
 																$scope.stocks[j].sekCostBasis = (rate * $scope.stocks[j].costBasis) | 0;
+																$scope.stocks[j].gain = ($scope.stocks[j].sekValue - $scope.stocks[j].sekCostBasis) | 0;
+																$scope.stocks[j].percentgain = ($scope.stocks[j].gain / $scope.stocks[j].sekCostBasis) * 100.0 | 0;
 																$scope.sumValue += value;
 																if ($scope.stocks[j].label == 'Guld') {
 																	$scope.goldValue += value;

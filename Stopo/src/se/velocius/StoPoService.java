@@ -1,9 +1,9 @@
 package se.velocius;
 
 import static java.util.stream.Collectors.groupingBy;
-import static java.util.stream.Collectors.summingDouble;
 import static java.util.stream.Collectors.summingInt;
 
+import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
 
@@ -53,10 +53,18 @@ public class StoPoService {
 				.filter(s -> noSharesByStockSid.containsKey(s.getSid()))
 				.forEach(s -> s.setNoShares(noSharesByStockSid.get(s.getSid())));
 
-		Map<String, Double> costBasisByStockSid = transactions.stream()
+		Map<String, Double> costBasisByStockSid = transactions
+				.stream()
+				.sorted(new Comparator<Transaction>() {
+
+					@Override
+					public int compare(Transaction o1, Transaction o2) {
+						return o1.getDate().compareTo(o2.getDate());
+					}
+				})
 				.collect(
 						groupingBy(Transaction::getStockSid,
-								summingDouble(Transaction::costDelta)));
+								TransSumCollector.getTransSumCollector()));
 
 		stocks.stream()
 				.filter(s -> costBasisByStockSid.containsKey(s.getSid()))
