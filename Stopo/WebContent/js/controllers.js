@@ -92,18 +92,23 @@ stopoControllers
 																$scope.stocks[j].sekCostBasis = (rate * $scope.stocks[j].costBasis) | 0;
 																$scope.stocks[j].gain = ($scope.stocks[j].sekValue - $scope.stocks[j].sekCostBasis) | 0;
 																$scope.stocks[j].percentgain = ($scope.stocks[j].gain / $scope.stocks[j].sekCostBasis) * 100.0 | 0;
-																$scope.sumValue += value;
+																$scope.curr.sum += value;
+																$scope.gain.sum += $scope.stocks[j].gain;
 																if ($scope.stocks[j].label == 'Guld') {
-																	$scope.goldValue += value;
+																	$scope.curr.gold += value;
+																	$scope.gain.gold += $scope.stocks[j].gain;
 																}
 																if ($scope.stocks[j].label == 'Energi') {
-																	$scope.energyValue += value;
+																	$scope.curr.energy += value;
+																	$scope.gain.energy += $scope.stocks[j].gain;
 																}
 																if ($scope.stocks[j].label == 'Teck') {
-																	$scope.teckValue += value;
+																	$scope.curr.teck += value;
+																	$scope.gain.teck += $scope.stocks[j].gain;
 																}
 																if ($scope.stocks[j].label == 'Allmänt') {
-																	$scope.generalValue += value;
+																	$scope.curr.general += value;
+																	$scope.gain.general += $scope.stocks[j].gain;
 																}
 															}
 														}
@@ -115,11 +120,20 @@ stopoControllers
 							};
 
 							$scope.Update = function() {
-								$scope.sumValue = 0;
-								$scope.goldValue = 0;
-								$scope.energyValue = 0;
-								$scope.teckValue = 0;
-								$scope.generalValue = 0;
+								$scope.curr = {
+										sum : 0,
+										gold : 0,
+										energy : 0,
+										teck : 0,
+										general : 0
+									};
+									$scope.gain = {
+										sum : 0,
+										gold : 0,
+										energy : 0,
+										teck : 0,
+										general : 0
+									};
 								$scope.currencyRates = OpenEx.get({}, function(
 										data) {
 									$scope.UpdateQuotes();
@@ -133,11 +147,20 @@ stopoControllers
 
 							$scope.newLabel = 'gold';
 							$scope.refresh();
-							$scope.sumValue = 0;
-							$scope.goldValue = 0;
-							$scope.energyValue = 0;
-							$scope.teckValue = 0;
-							$scope.generalValue = 0;
+							$scope.curr = {
+								sum : 0,
+								gold : 0,
+								energy : 0,
+								teck : 0,
+								general : 0
+							};
+							$scope.gain = {
+								sum : 0,
+								gold : 0,
+								energy : 0,
+								teck : 0,
+								general : 0
+							};
 							$scope.predicate = 'name';
 
 						} ]);
