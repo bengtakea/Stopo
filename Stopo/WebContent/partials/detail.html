@@ -4,6 +4,39 @@
 	<div class="row">
 		<div class="col-md-2">
 			<button type="button" class="btn btn-default"
+				ng-click="UpdateStock()">Uppdatera Aktie</button>
+		</div>
+		<div class="col-md-2">
+			<p>Kategori :</p>
+			<select ng-model="stock.label">
+				<option value="gold">Guld</option>
+				<option value="energy">Energi</option>
+				<option value="teck">Teck</option>
+				<option value="general">Allm&auml;nt</option>
+			</select>
+		</div>
+		<div class="col-md-2">
+			<p>Stopp-pris :</p>
+			<input type="text" class="form-control" ng-model="stock.stopPrice" />
+		</div>
+
+		<div class="col-md-2">
+			<p>:</p>
+		</div>
+
+		<div class="col-md-2">
+			<p>:</p>
+		</div>
+
+		<div class="col-md-2">
+			<p>:</p>
+		</div>
+
+	</div>
+	<hr>
+	<div class="row">
+		<div class="col-md-2">
+			<button type="button" class="btn btn-default"
 				ng-click="AddTransaction()">Ny trans.</button>
 		</div>
 		<div class="col-md-2">
@@ -49,6 +82,7 @@
 				<option value="Penntrade">Penntrade</option>
 			</select>
 		</div>
+
 	</div>
 	<div class="row">
 		<div class="col-md-12">

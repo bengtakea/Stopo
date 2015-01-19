@@ -13,6 +13,7 @@ public class Stock {
 	private String name;
 	private String yahooTicker;
 	private String label;
+	private double stopPrice;
 	private int noShares;
 	private double costBasis;
 
@@ -51,6 +52,15 @@ public class Stock {
 
 	public void setLabel(String label) {
 		this.label = label;
+	}
+
+	@DynamoDBAttribute(attributeName = "StopPrice")
+	public double getStopPrice() {
+		return stopPrice;
+	}
+
+	public void setStopPrice(double stopPrice) {
+		this.stopPrice = stopPrice;
 	}
 
 	public int getNoShares() {

@@ -10,11 +10,13 @@ stopoControllers
 				[
 						'$scope',
 						'$http',
+						'$interval',
 						'Portfolio',
 						'Stock',
 						'Yahoo',
 						'OpenEx',
-						function($scope, $http, Portfolio, Stock, Yahoo, OpenEx) {
+						function($scope, $http, $interval, Portfolio, Stock,
+								Yahoo, OpenEx) {
 							$scope.refresh = function() {
 								$scope.stocks = Portfolio
 										.query(function() {
@@ -121,19 +123,19 @@ stopoControllers
 
 							$scope.Update = function() {
 								$scope.curr = {
-										sum : 0,
-										gold : 0,
-										energy : 0,
-										teck : 0,
-										general : 0
-									};
-									$scope.gain = {
-										sum : 0,
-										gold : 0,
-										energy : 0,
-										teck : 0,
-										general : 0
-									};
+									sum : 0,
+									gold : 0,
+									energy : 0,
+									teck : 0,
+									general : 0
+								};
+								$scope.gain = {
+									sum : 0,
+									gold : 0,
+									energy : 0,
+									teck : 0,
+									general : 0
+								};
 								$scope.currencyRates = OpenEx.get({}, function(
 										data) {
 									$scope.UpdateQuotes();
@@ -162,6 +164,14 @@ stopoControllers
 								general : 0
 							};
 							$scope.predicate = 'name';
+
+							$scope.quoteTimer = $interval(function() {
+								$scope.Update();
+							}, 60000);
+
+							$scope.$on('$destroy', function() {
+								$interval.cancel($scope.quoteTimer);
+							})
 
 						} ]);
 
@@ -196,6 +206,13 @@ stopoControllers.controller('DetailCtrl',
 					}, function(stock) {
 						$scope.refresh();
 					});
+					
+					$scope.UpdateStock = function() {
+						Stock.save({id:$scope.stock.sid}, $scope.stock, function(
+								data) {
+						});
+					}
+					
 					$scope.newType = 'buy';
 					$scope.newPortfolio = 'Avanza ISK'
 

@@ -11,6 +11,7 @@ import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
+import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.MediaType;
@@ -72,6 +73,19 @@ public class StoPoService {
 						s -> s.setCostBasis(costBasisByStockSid.get(s.getSid())));
 
 		return stocks.toArray(new Stock[stocks.size()]);
+	}
+
+	@POST
+	@Path("/stock/{id}")
+	@Consumes("application/json")
+	public Stock addStock(final Stock stock, @PathParam("id") final String id) {
+		DynamoDBMapper mapper = DBHandler.getDBMapper();
+
+		System.out.println("Id :" + id);
+
+		mapper.save(stock);
+
+		return stock;
 	}
 
 	@POST
