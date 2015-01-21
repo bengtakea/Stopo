@@ -147,6 +147,16 @@ stopoControllers
 										| stock.noShares > 0;
 							}
 
+							$scope.filterZeroStocks = localStorage
+									.getItem("zeroStocks") !== null ? $scope
+									.$eval(localStorage.getItem('zeroStocks'))
+									: true;
+
+							$scope.$watch('filterZeroStocks', function(
+									newValue, oldValue) {
+								localStorage.setItem('zeroStocks', newValue);
+							});
+
 							$scope.newLabel = 'gold';
 							$scope.refresh();
 							$scope.curr = {
@@ -206,13 +216,14 @@ stopoControllers.controller('DetailCtrl',
 					}, function(stock) {
 						$scope.refresh();
 					});
-					
+
 					$scope.UpdateStock = function() {
-						Stock.save({id:$scope.stock.sid}, $scope.stock, function(
-								data) {
+						Stock.save({
+							id : $scope.stock.sid
+						}, $scope.stock, function(data) {
 						});
 					}
-					
+
 					$scope.newType = 'buy';
 					$scope.newPortfolio = 'Avanza ISK'
 

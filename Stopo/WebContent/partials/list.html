@@ -147,7 +147,9 @@
                   stock.gain > 0.0 && {'color': 'green'} ||
                   stock.gain < 0.0 && {'color': 'red'}">{{stock.gain}}</td>
 							<td class="text-center">{{stock.label}}</td>
-							<td class="text-center">{{stock.stopPrice}}</td>
+							<td class="text-center"
+								ng-style="stock.stopPrice >= stock.lastQuote && {'color': 'red'} ||
+                  stock.stopPrice < stock.lastQuote && {'color': 'black'}">{{stock.stopPrice}}</td>
 						</tr>
 					</tbody>
 				</table>

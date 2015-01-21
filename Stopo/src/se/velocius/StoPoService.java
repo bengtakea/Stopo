@@ -78,10 +78,8 @@ public class StoPoService {
 	@POST
 	@Path("/stock/{id}")
 	@Consumes("application/json")
-	public Stock addStock(final Stock stock, @PathParam("id") final String id) {
+	public Stock updateStock(final Stock stock, @PathParam("id") final String id) {
 		DynamoDBMapper mapper = DBHandler.getDBMapper();
-
-		System.out.println("Id :" + id);
 
 		mapper.save(stock);
 
