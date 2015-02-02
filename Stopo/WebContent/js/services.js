@@ -29,13 +29,12 @@ stopoServices.factory('Trans', [ '$resource', function($resource) {
 } ]);
 
 stopoServices
-.factory(
+		.factory(
 				'OpenEx',
-		[
-				'$resource',
-				function($resource) {
-					return $resource(
-							"http://openexchangerates.org/api/latest.json?app_id=01d2a695b41746f2a915f1069a3f54c6",
-							{}, {});
-				} ]);
-
+				[
+						'$resource',
+						function($resource) {
+							return $resource(
+									"http://openexchangerates.org/api/latest.json?app_id=01d2a695b41746f2a915f1069a3f54c6&t="
+											+ new Date(), {}, {});
+						} ]);
