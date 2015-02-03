@@ -89,28 +89,14 @@ stopoControllers
 																}
 																var value = (rate
 																		* $scope.stocks[j].lastQuote * $scope.stocks[j].noShares) | 0;
+																var oldSekValue = $scope.stocks[j].sekValue | 0;
 																$scope.stocks[j].sekValue = (rate
 																		* $scope.stocks[j].lastQuote * $scope.stocks[j].noShares) | 0;
 																$scope.stocks[j].sekCostBasis = (rate * $scope.stocks[j].costBasis) | 0;
 																$scope.stocks[j].gain = ($scope.stocks[j].sekValue - $scope.stocks[j].sekCostBasis) | 0;
 																$scope.stocks[j].percentgain = ($scope.stocks[j].gain / $scope.stocks[j].sekCostBasis) * 100.0 | 0;
-																$scope.curr.sum += value;
-																$scope.gain.sum += $scope.stocks[j].gain;
-																if ($scope.stocks[j].label == 'Guld') {
-																	$scope.curr.gold += value;
-																	$scope.gain.gold += $scope.stocks[j].gain;
-																}
-																if ($scope.stocks[j].label == 'Energi') {
-																	$scope.curr.energy += value;
-																	$scope.gain.energy += $scope.stocks[j].gain;
-																}
-																if ($scope.stocks[j].label == 'Teck') {
-																	$scope.curr.teck += value;
-																	$scope.gain.teck += $scope.stocks[j].gain;
-																}
-																if ($scope.stocks[j].label == 'Allmänt') {
-																	$scope.curr.general += value;
-																	$scope.gain.general += $scope.stocks[j].gain;
+																if (oldSekValue !== $scope.stocks[j].sekValue) {
+																	$scope.SumCategories();
 																}
 															}
 														}
@@ -122,6 +108,13 @@ stopoControllers
 							};
 
 							$scope.Update = function() {
+								$scope.currencyRates = OpenEx.get({}, function(
+										data) {
+									$scope.UpdateQuotes();
+								});
+							};
+
+							$scope.SumCategories = function() {
 								$scope.curr = {
 									sum : 0,
 									gold : 0,
@@ -136,10 +129,27 @@ stopoControllers
 									teck : 0,
 									general : 0
 								};
-								$scope.currencyRates = OpenEx.get({}, function(
-										data) {
-									$scope.UpdateQuotes();
-								});
+								var i;
+								for (i = 0; i < $scope.stocks.length; i++) {
+									$scope.curr.sum += $scope.stocks[i].sekValue;
+									$scope.gain.sum += $scope.stocks[i].gain;
+									if ($scope.stocks[i].label == 'Guld') {
+										$scope.curr.gold += $scope.stocks[i].sekValue;
+										$scope.gain.gold += $scope.stocks[i].gain;
+									}
+									if ($scope.stocks[i].label == 'Energi') {
+										$scope.curr.energy += $scope.stocks[i].sekValue;
+										$scope.gain.energy += $scope.stocks[i].gain;
+									}
+									if ($scope.stocks[i].label == 'Teck') {
+										$scope.curr.teck += $scope.stocks[i].sekValue;
+										$scope.gain.teck += $scope.stocks[i].gain;
+									}
+									if ($scope.stocks[i].label == 'Allmänt') {
+										$scope.curr.general += $scope.stocks[i].sekValue;
+										$scope.gain.general += $scope.stocks[i].gain;
+									}
+								}
 							};
 
 							$scope.filterFunction = function(stock) {
