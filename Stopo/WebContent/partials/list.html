@@ -149,7 +149,8 @@
 							<td class="text-center">{{stock.label}}</td>
 							<td class="text-center"
 								ng-style="stock.stopPrice >= stock.lastQuote && {'color': 'red'} ||
-                  stock.stopPrice < stock.lastQuote && {'color': 'black'}">{{stock.stopPrice}}</td>
+                  stock.stopPrice < stock.lastQuote && {'color': 'black'}">{{stock.stopPrice
+								| number:2}}</td>
 						</tr>
 					</tbody>
 				</table>

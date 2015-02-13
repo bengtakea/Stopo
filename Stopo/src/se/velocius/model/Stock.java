@@ -14,6 +14,7 @@ public class Stock {
 	private String yahooTicker;
 	private String label;
 	private double stopPrice;
+	private double trailingStopPercent;
 	private int noShares;
 	private double costBasis;
 	private double sekValue;
@@ -63,6 +64,15 @@ public class Stock {
 
 	public void setStopPrice(double stopPrice) {
 		this.stopPrice = stopPrice;
+	}
+
+	@DynamoDBAttribute(attributeName = "TrailingStopPercent")
+	public double getTrailingStopPercent() {
+		return trailingStopPercent;
+	}
+
+	public void setTrailingStopPercent(double trailingStopPercent) {
+		this.trailingStopPercent = trailingStopPercent;
 	}
 
 	public int getNoShares() {

@@ -96,7 +96,29 @@ stopoControllers
 																$scope.stocks[j].gain = ($scope.stocks[j].sekValue - $scope.stocks[j].sekCostBasis) | 0;
 																$scope.stocks[j].percentgain = ($scope.stocks[j].gain / $scope.stocks[j].sekCostBasis) * 100.0 | 0;
 																if (oldSekValue !== $scope.stocks[j].sekValue) {
-																	$scope.SumCategories();
+																	$scope
+																			.SumCategories();
+																}
+																var trailingStopPercent = $scope.stocks[j].trailingStopPercent | 0;
+																if (trailingStopPercent > 0) {
+																	var stopPrice = $scope.stocks[j].stopPrice | 0;
+																	var trailingQuote = $scope.stocks[j].lastQuote
+																			* (1 - trailingStopPercent / 100);
+																	if (trailingQuote > stopPrice) {
+																		$scope.stocks[j].stopPrice = trailingQuote;
+																		var st = {};
+																		st.yahooTicker = $scope.stocks[j].yahooTicker;
+																		st.sid = $scope.stocks[j].sid;
+																		st.name = $scope.stocks[j].name;
+																		st.label = $scope.stocks[j].label;
+																		st.stopPrice = $scope.stocks[j].stopPrice;
+																		st.trailingStopPercent = $scope.stocks[j].trailingStopPercent;
+																		console.log(st);
+																		Stock.save({
+																			id : st.sid
+																		}, st, function(data) {
+																		});
+																	}
 																}
 															}
 														}
@@ -192,6 +214,7 @@ stopoControllers
 							$scope.$on('$destroy', function() {
 								$interval.cancel($scope.quoteTimer);
 							})
+
 
 						} ]);
 
