@@ -115,8 +115,6 @@ stopoControllers
 																		st.label = $scope.stocks[j].label;
 																		st.stopPrice = $scope.stocks[j].stopPrice;
 																		st.trailingStopPercent = $scope.stocks[j].trailingStopPercent;
-																		console
-																				.log(st);
 																		Stock
 																				.save(
 																						{
@@ -138,10 +136,14 @@ stopoControllers
 							};
 
 							$scope.Update = function() {
-								$scope.currencyRates = OpenEx.get({}, function(
-										data) {
+								if ($scope.currencyRates) {
 									$scope.UpdateQuotes();
-								});
+								} else {
+									$scope.currencyRates = OpenEx.get({},
+											function(data) {
+												$scope.UpdateQuotes();
+											});
+								}
 							};
 
 							$scope.SumCategories = function() {
