@@ -22,6 +22,17 @@
 								ng-click="AddTicker()">L&auml;gg till!</button>
 						</span>
 					</div> <!-- /input-group --></li>
+				<li class="nav-sidebar"><select ng-model="selectedPortfolio" ng-options="portfolio.name for portfolio in portfolios">
+						<option value="">-- V&aumllj Portf&oumllj --</option>
+					</select>
+					<div class="input-group">
+						<input type="text" class="form-control" ng-model="selectedPortfolio.cash" /> <span
+							class="input-group-btn">
+							<button class="btn btn-default" type="button"
+								ng-click="UpdateCash()">Uppdatera!</button>
+						</span>
+					</div> <!-- /input-group --></li>
+				</li>
 				<li class="nav-sidebar">
 					<button class="btn btn-default" type="button" ng-click="Update()">Uppdatera</button>
 				</li>
@@ -57,6 +68,11 @@
 									<td>Allm&auml;nt :</td>
 									<td class="text-right">{{curr.general}}</td>
 									<td class="text-right">{{gain.general}}</td>
+								</tr>
+								<tr>
+									<td>Saldo :</td>
+									<td class="text-right">{{curr.cash}}</td>
+									<td class="text-right"></td>
 								</tr>
 							</tbody>
 						</table>

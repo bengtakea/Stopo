@@ -4,7 +4,7 @@
 
 var stopoServices = angular.module('stopoServices', [ 'ngResource' ]);
 
-stopoServices.factory('Portfolio', [ '$resource', function($resource) {
+stopoServices.factory('ListOfStocks', [ '$resource', function($resource) {
 	return $resource('rest/stoposervice/getstocks', {}, {});
 } ]);
 
@@ -38,3 +38,8 @@ stopoServices
 									"http://openexchangerates.org/api/latest.json?app_id=01d2a695b41746f2a915f1069a3f54c6&t="
 											+ new Date(), {}, {});
 						} ]);
+
+stopoServices.factory('Portfolio', [ '$resource', function($resource) {
+	return $resource('rest/stoposervice/portfolio', {}, {});
+} ]);
+

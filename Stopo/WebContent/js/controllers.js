@@ -11,14 +11,15 @@ stopoControllers
 						'$scope',
 						'$http',
 						'$interval',
-						'Portfolio',
+						'ListOfStocks',
 						'Stock',
 						'Yahoo',
 						'OpenEx',
-						function($scope, $http, $interval, Portfolio, Stock,
-								Yahoo, OpenEx) {
+						'Portfolio',
+						function($scope, $http, $interval, ListOfStocks, Stock,
+								Yahoo, OpenEx, Portfolio) {
 							$scope.refresh = function() {
-								$scope.stocks = Portfolio
+								$scope.stocks = ListOfStocks
 										.query(function() {
 											var i;
 											for (i = 0; i < $scope.stocks.length; i++) {
@@ -36,6 +37,7 @@ stopoControllers
 												}
 											}
 										});
+								$scope.portfolios = Portfolio.query();
 
 							};
 
@@ -59,6 +61,14 @@ stopoControllers
 												}, function(response) {
 													$scope.error = true;
 												});
+
+							};
+
+							$scope.UpdateCash = function() {
+								Portfolio.save($scope.selectedPortfolio, function(
+										data) {
+									$scope.refresh();
+								});
 
 							};
 
@@ -152,7 +162,8 @@ stopoControllers
 									gold : 0,
 									energy : 0,
 									teck : 0,
-									general : 0
+									general : 0,
+									cash : 0
 								};
 								$scope.gain = {
 									sum : 0,
@@ -182,6 +193,10 @@ stopoControllers
 										$scope.gain.general += $scope.stocks[i].gain;
 									}
 								}
+								for (i = 0; i < $scope.portfolios.length; i++) {
+									$scope.curr.sum += $scope.portfolios[i].cash;
+									$scope.curr.cash += $scope.portfolios[i].cash;
+								}
 							};
 
 							$scope.filterFunction = function(stock) {
@@ -199,6 +214,7 @@ stopoControllers
 								localStorage.setItem('zeroStocks', newValue);
 							});
 
+							$scope.portfolios = Portfolio.query();
 							$scope.newLabel = 'gold';
 							$scope.refresh();
 							$scope.curr = {
@@ -206,7 +222,8 @@ stopoControllers
 								gold : 0,
 								energy : 0,
 								teck : 0,
-								general : 0
+								general : 0,
+								cash : 0
 							};
 							$scope.gain = {
 								sum : 0,

@@ -16,6 +16,7 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.MediaType;
 
+import se.velocius.model.Portfolio;
 import se.velocius.model.Stock;
 import se.velocius.model.Transaction;
 
@@ -150,6 +151,29 @@ public class StoPoService {
 				scanExpression);
 
 		return transactions.toArray(new Transaction[transactions.size()]);
+	}
+
+	@GET
+	@Path("/portfolio")
+	@Produces(MediaType.APPLICATION_JSON)
+	public Portfolio[] getPortfolios() {
+		DynamoDBMapper mapper = DBHandler.getDBMapper();
+
+		DynamoDBScanExpression scanExpression = new DynamoDBScanExpression();
+		List<Portfolio> portfolios = mapper.scan(Portfolio.class,
+				scanExpression);
+		return portfolios.toArray(new Portfolio[portfolios.size()]);
+	}
+
+	@POST
+	@Path("/portfolio")
+	@Consumes("application/json")
+	public Portfolio updatePortfolio(final Portfolio portfolio) {
+		DynamoDBMapper mapper = DBHandler.getDBMapper();
+
+		mapper.save(portfolio);
+
+		return portfolio;
 	}
 
 }
