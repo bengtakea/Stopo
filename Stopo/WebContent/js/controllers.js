@@ -32,6 +32,9 @@ stopoControllers
 												if ($scope.stocks[i].label == 'teck') {
 													$scope.stocks[i].label = 'Teck'
 												}
+												if ($scope.stocks[i].label == 'shipping') {
+													$scope.stocks[i].label = 'Shipping'
+												}
 												if ($scope.stocks[i].label == 'general') {
 													$scope.stocks[i].label = 'Allmänt'
 												}
@@ -162,6 +165,7 @@ stopoControllers
 									gold : 0,
 									energy : 0,
 									teck : 0,
+									shipping : 0,
 									general : 0,
 									cash : 0
 								};
@@ -170,6 +174,7 @@ stopoControllers
 									gold : 0,
 									energy : 0,
 									teck : 0,
+									shipping : 0,
 									general : 0
 								};
 								var i;
@@ -187,6 +192,10 @@ stopoControllers
 									if ($scope.stocks[i].label == 'Teck') {
 										$scope.curr.teck += $scope.stocks[i].sekValue;
 										$scope.gain.teck += $scope.stocks[i].gain;
+									}
+									if ($scope.stocks[i].label == 'Shipping') {
+										$scope.curr.shipping += $scope.stocks[i].sekValue;
+										$scope.gain.shipping += $scope.stocks[i].gain;
 									}
 									if ($scope.stocks[i].label == 'Allmänt') {
 										$scope.curr.general += $scope.stocks[i].sekValue;
@@ -222,6 +231,7 @@ stopoControllers
 								gold : 0,
 								energy : 0,
 								teck : 0,
+								shipping : 0,
 								general : 0,
 								cash : 0
 							};
@@ -230,6 +240,7 @@ stopoControllers
 								gold : 0,
 								energy : 0,
 								teck : 0,
+								shipping : 0,
 								general : 0
 							};
 							$scope.predicate = 'name';
