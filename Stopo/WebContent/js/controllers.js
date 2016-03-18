@@ -14,10 +14,11 @@ stopoControllers
 						'ListOfStocks',
 						'Stock',
 						'Yahoo',
+						'Google',
 						'OpenEx',
 						'Portfolio',
 						function($scope, $http, $interval, ListOfStocks, Stock,
-								Yahoo, OpenEx, Portfolio) {
+								Yahoo, Google, OpenEx, Portfolio) {
 							$scope.refresh = function() {
 								$scope.stocks = ListOfStocks
 										.query(function() {
@@ -68,37 +69,42 @@ stopoControllers
 							};
 
 							$scope.UpdateCash = function() {
-								Portfolio.save($scope.selectedPortfolio, function(
-										data) {
-									$scope.refresh();
-								});
+								Portfolio.save($scope.selectedPortfolio,
+										function(data) {
+											$scope.refresh();
+										});
 
 							};
 
 							$scope.UpdateQuotes = function() {
 								var i;
 								for (i = 0; i < $scope.stocks.length; i++) {
-									Yahoo
+									Google
 											.get(
 													{
-														symbol : $scope.stocks[i].yahooTicker
+														symbol : $scope.stocks[i].googleTicker
 													},
 													function(data) {
 														$scope.error = false;
 														var stock = {};
-														stock.yahooTicker = data.query.results.quote["symbol"];
+														stock.ticker = data[0].e + ":" + data[0].t;
 														var j;
 														for (j = 0; j < $scope.stocks.length; j++) {
-															if ($scope.stocks[j].yahooTicker == stock.yahooTicker) {
-																$scope.stocks[j].lastQuote = data.query.results.quote["LastTradePriceOnly"];
-																$scope.stocks[j].change = data.query.results.quote["Change"];
-																$scope.stocks[j].percentchange = parseFloat(data.query.results.quote["PercentChange"]);
+															if ($scope.stocks[j].googleTicker == stock.ticker) {
+																$scope.stocks[j].lastQuote = data[0].l;
+																$scope.stocks[j].change = data[0].c;
+																$scope.stocks[j].percentchange = parseFloat(data[0].cp);
+																
+																var tmp1 = data[0].l_cur.search('SEK');
+																var tmp2 = data[0].l_cur.search('CA');
+																
 																var rate = 1.0;
-																if (data.query.results.quote["Currency"] == 'USD') {
-																	rate = $scope.currencyRates.rates.SEK;
-																} else if (data.query.results.quote["Currency"] == 'CAD') {
+																if (data[0].l_cur.search('SEK') > -1) {
+																} else if (data[0].l_cur.search('CA') > -1) {
 																	rate = rate = $scope.currencyRates.rates.SEK
 																			* (1 / $scope.currencyRates.rates.CAD);
+																} else {
+																	rate = $scope.currencyRates.rates.SEK;
 																}
 																var value = (rate
 																		* $scope.stocks[j].lastQuote * $scope.stocks[j].noShares) | 0;
@@ -145,6 +151,99 @@ stopoControllers
 														$scope.error = true;
 													});
 
+									// Yahoo
+									// .get(
+									// {
+									// symbol : $scope.stocks[i].yahooTicker
+									// },
+									// function(data) {
+									// $scope.error = false;
+									// var stock = {};
+									// stock.yahooTicker =
+									// data.query.results.quote["symbol"];
+									// var j;
+									// for (j = 0; j < $scope.stocks.length;
+									// j++) {
+									// if ($scope.stocks[j].yahooTicker ==
+									// stock.yahooTicker) {
+									// $scope.stocks[j].lastQuote =
+									// data.query.results.quote["LastTradePriceOnly"];
+									// $scope.stocks[j].change =
+									// data.query.results.quote["Change"];
+									// $scope.stocks[j].percentchange =
+									// parseFloat(data.query.results.quote["PercentChange"]);
+									// var rate = 1.0;
+									// if (data.query.results.quote["Currency"]
+									// == 'USD') {
+									// rate = $scope.currencyRates.rates.SEK;
+									// } else if
+									// (data.query.results.quote["Currency"] ==
+									// 'CAD') {
+									// rate = rate =
+									// $scope.currencyRates.rates.SEK
+									// * (1 / $scope.currencyRates.rates.CAD);
+									// }
+									// var value = (rate
+									// * $scope.stocks[j].lastQuote *
+									// $scope.stocks[j].noShares) | 0;
+									// var oldSekValue =
+									// $scope.stocks[j].sekValue | 0;
+									// $scope.stocks[j].sekValue = (rate
+									// * $scope.stocks[j].lastQuote *
+									// $scope.stocks[j].noShares) | 0;
+									// $scope.stocks[j].sekCostBasis = (rate *
+									// $scope.stocks[j].costBasis) | 0;
+									// $scope.stocks[j].gain =
+									// ($scope.stocks[j].sekValue -
+									// $scope.stocks[j].sekCostBasis) | 0;
+									// $scope.stocks[j].percentgain =
+									// ($scope.stocks[j].gain /
+									// $scope.stocks[j].sekCostBasis) * 100.0 |
+									// 0;
+									// if (oldSekValue !==
+									// $scope.stocks[j].sekValue) {
+									// $scope
+									// .SumCategories();
+									// }
+									// var trailingStopPercent =
+									// $scope.stocks[j].trailingStopPercent;
+									// if (trailingStopPercent > 0) {
+									// var stopPrice =
+									// $scope.stocks[j].stopPrice;
+									// var trailingQuote = Math
+									// .round($scope.stocks[j].lastQuote
+									// * (1 - trailingStopPercent / 100)
+									// * 100) / 100;
+									// if (trailingQuote > stopPrice) {
+									// $scope.stocks[j].stopPrice =
+									// trailingQuote;
+									// var st = {};
+									// st.yahooTicker =
+									// $scope.stocks[j].yahooTicker;
+									// st.sid = $scope.stocks[j].sid;
+									// st.name = $scope.stocks[j].name;
+									// st.label = $scope.stocks[j].label;
+									// st.stopPrice =
+									// $scope.stocks[j].stopPrice;
+									// st.trailingStopPercent =
+									// $scope.stocks[j].trailingStopPercent;
+									// Stock
+									// .save(
+									// {
+									// id : st.sid
+									// },
+									// st,
+									// function(
+									// data) {
+									// });
+									// }
+									// }
+									// }
+									// }
+									// }, function(response) {
+									// $scope.error = true;
+									// });
+									//
 								}
 							};
 

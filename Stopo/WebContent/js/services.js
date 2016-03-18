@@ -24,6 +24,17 @@ stopoServices
 									{}, {});
 						} ]);
 
+stopoServices.factory('Google', [ '$resource', function($resource) {
+	return $resource("http://www.google.com/finance/info?q=:symbol", {
+		callback : 'JSON_CALLBACK'
+	}, {
+		'get' : {
+			method : 'JSONP',
+			isArray : true
+		}
+	});
+} ]);
+
 stopoServices.factory('Trans', [ '$resource', function($resource) {
 	return $resource('rest/stoposervice/trans', {}, {});
 } ]);
@@ -42,4 +53,3 @@ stopoServices
 stopoServices.factory('Portfolio', [ '$resource', function($resource) {
 	return $resource('rest/stoposervice/portfolio', {}, {});
 } ]);
-

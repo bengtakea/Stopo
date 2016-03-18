@@ -12,6 +12,7 @@ public class Stock {
 	private String sid;
 	private String name;
 	private String yahooTicker;
+	private String googleTicker;
 	private String label;
 	private double stopPrice;
 	private double trailingStopPercent;
@@ -46,6 +47,15 @@ public class Stock {
 
 	public void setYahooTicker(String yahooTicker) {
 		this.yahooTicker = yahooTicker;
+	}
+
+	@DynamoDBAttribute(attributeName = "GoogleTicker")
+	public String getGoogleTicker() {
+		return googleTicker;
+	}
+
+	public void setGoogleTicker(String googleTicker) {
+		this.googleTicker = googleTicker;
 	}
 
 	@DynamoDBAttribute(attributeName = "Label")
