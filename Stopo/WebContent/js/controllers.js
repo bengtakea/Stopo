@@ -94,10 +94,6 @@ stopoControllers
 																$scope.stocks[j].lastQuote = data[0].l;
 																$scope.stocks[j].change = data[0].c;
 																$scope.stocks[j].percentchange = parseFloat(data[0].cp);
-																
-																var tmp1 = data[0].l_cur.search('SEK');
-																var tmp2 = data[0].l_cur.search('CA');
-																
 																var rate = 1.0;
 																if (data[0].l_cur.search('SEK') > -1) {
 																} else if (data[0].l_cur.search('CA') > -1) {
