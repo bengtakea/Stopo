@@ -97,8 +97,11 @@ stopoControllers
 																var rate = 1.0;
 																if (data[0].l_cur.search('SEK') > -1) {
 																} else if (data[0].l_cur.search('CA') > -1) {
-																	rate = rate = $scope.currencyRates.rates.SEK
+																	rate = $scope.currencyRates.rates.SEK
 																			* (1 / $scope.currencyRates.rates.CAD);
+																} else if (data[0].l_cur.search('NO') > -1) {
+																	rate = $scope.currencyRates.rates.SEK
+																			* (1 / $scope.currencyRates.rates.NOK);
 																} else {
 																	rate = $scope.currencyRates.rates.SEK;
 																}
