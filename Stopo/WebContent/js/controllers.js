@@ -91,7 +91,7 @@ stopoControllers
 														var j;
 														for (j = 0; j < $scope.stocks.length; j++) {
 															if ($scope.stocks[j].googleTicker == stock.ticker) {
-																$scope.stocks[j].lastQuote = data[0].l;
+																$scope.stocks[j].lastQuote = (data[0].l).replace(',','');
 																$scope.stocks[j].change = data[0].c;
 																$scope.stocks[j].percentchange = parseFloat(data[0].cp);
 																var rate = 1.0;
