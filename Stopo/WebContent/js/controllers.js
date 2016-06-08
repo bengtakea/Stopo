@@ -128,6 +128,7 @@ stopoControllers
 																		$scope.stocks[j].stopPrice = trailingQuote;
 																		var st = {};
 																		st.yahooTicker = $scope.stocks[j].yahooTicker;
+																		st.googleTicker = $scope.stocks[j].googleTicker;
 																		st.sid = $scope.stocks[j].sid;
 																		st.name = $scope.stocks[j].name;
 																		st.label = $scope.stocks[j].label;
