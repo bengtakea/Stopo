@@ -87,7 +87,11 @@ stopoControllers
 													function(data) {
 														$scope.error = false;
 														var stock = {};
-														stock.ticker = data[0].e + ":" + data[0].t;
+														stock.ticker = "";
+														if (!(data[0].e == 'NYSE' || data[0].e == 'NASDAQ')) {
+															stock.ticker = data[0].e + ":";
+														}
+														stock.ticker += data[0].t;
 														var j;
 														for (j = 0; j < $scope.stocks.length; j++) {
 															if ($scope.stocks[j].googleTicker == stock.ticker) {
